@@ -774,8 +774,8 @@ extension JSON: Swift.RawRepresentable {
   let data = try self.rawData(options: opt)
   return String(data: data, encoding: encoding)
   } catch {
-  let log = CoreLogger(true, .hosted)
-  log.critical("JSON Fail: \(error)")
+//  let log = CoreLogger(true, .hosted)
+//  log.critical("JSON Fail: \(error)")
   return nil
   }
   case .string:
@@ -798,8 +798,8 @@ extension JSON: Swift.RawRepresentable {
         let data = try self.rawData(options: opt)
         return String(data: data, encoding: encoding)
       } catch {
-        let log = CoreLogger(true, .hosted)
-        log.critical("JSON Fail: \(error)")
+//        let log = CoreLogger(true, .hosted)
+//        log.critical("JSON Fail: \(error)")
         return nil
       }
     case .string:

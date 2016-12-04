@@ -1,0 +1,5 @@
+version: "Apple Swift version 3.0.2 (swift-3.0.2-PREVIEW-1)"
+options: "7ecbfc94656115f7383cb39f994f4c74"
+build_time: [534185591, 146090000]
+inputs:
+  "/Users/ethankay/Documents/CoreDB/SwiftyJSON/Source/SwiftyJSON.swift": [534185383, 0]

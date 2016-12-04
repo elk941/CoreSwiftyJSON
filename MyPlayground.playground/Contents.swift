@@ -1,15 +1,9 @@
 //: Playground - noun: a place where people can play
 
-import UIKit
+import SwiftyJSON
 
-var str = "Hello, playground"
+let sJSON: JSON = JSON(["test": 1])
 
-var test: [String: AnyObject] = [:]
+let test = "\(sJSON)"
+print(sJSON.rawDictionary)
 
-let test1: [String: AnyObject] = [:]
-
-let test2: [AnyObject] = []
-
-test["here"] = ["test": test1]
-
-test
