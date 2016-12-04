@@ -426,7 +426,11 @@ extension JSON {
     set {
       if self.type == .array {
         if self.rawArray.count > index && newValue.error == nil {
-          self.rawArray[index] = newValue.object as! AnyObject
+          #if os(Linux)
+            self.rawArray[index] = newValue.object as! AnyObject
+          #else
+            self.rawArray[index] = newValue.object as AnyObject
+          #endif
         }
       }
     }
@@ -449,7 +453,11 @@ extension JSON {
     }
     set {
       if self.type == .dictionary && newValue.error == nil {
-        self.rawDictionary[key] = newValue.object as! AnyObject
+        #if os(Linux)
+          self.rawDictionary[key] = newValue.object as! AnyObject
+        #else
+          self.rawDictionary[key] = newValue.object as AnyObject
+        #endif
       }
     }
   }
@@ -1322,9 +1330,17 @@ public func ==(lhs: JSON, rhs: JSON) -> Bool {
   case (.bool, .bool):
     return lhs.rawBool == rhs.rawBool
   case (.array, .array):
-    return lhs.rawArray as NSArray == rhs.rawArray as NSArray
+    #if os(Linux)
+      return lhs.rawArray._bridgeToObjectiveC() == rhs.rawArray._bridgeToObjectiveC()
+    #else
+      return lhs.rawArray as NSArray == rhs.rawArray as NSArray
+    #endif
   case (.dictionary, .dictionary):
-    return lhs.rawDictionary as NSDictionary == rhs.rawDictionary as NSDictionary
+    #if os(Linux)
+      return lhs.rawDictionary._bridgeToObjectiveC() == rhs.rawDictionary._bridgeToObjectiveC()
+    #else
+      return lhs.rawDictionary as NSDictionary == rhs.rawDictionary as NSDictionary
+    #endif
   case (.null, .null):
     return true
   default:
@@ -1342,9 +1358,17 @@ public func <=(lhs: JSON, rhs: JSON) -> Bool {
   case (.bool, .bool):
     return lhs.rawBool == rhs.rawBool
   case (.array, .array):
-    return lhs.rawArray as NSArray == rhs.rawArray as NSArray
+    #if os(Linux)
+      return lhs.rawArray._bridgeToObjectiveC() == rhs.rawArray._bridgeToObjectiveC()
+    #else
+      return lhs.rawArray as NSArray == rhs.rawArray as NSArray
+    #endif
   case (.dictionary, .dictionary):
-    return lhs.rawDictionary as NSDictionary == rhs.rawDictionary as NSDictionary
+    #if os(Linux)
+      return lhs.rawDictionary._bridgeToObjectiveC() == rhs.rawDictionary._bridgeToObjectiveC()
+    #else
+      return lhs.rawDictionary as NSDictionary == rhs.rawDictionary as NSDictionary
+    #endif
   case (.null, .null):
     return true
   default:
@@ -1362,9 +1386,17 @@ public func >=(lhs: JSON, rhs: JSON) -> Bool {
   case (.bool, .bool):
     return lhs.rawBool == rhs.rawBool
   case (.array, .array):
-    return lhs.rawArray as NSArray == rhs.rawArray as NSArray
+    #if os(Linux)
+      return lhs.rawArray._bridgeToObjectiveC() == rhs.rawArray._bridgeToObjectiveC()
+    #else
+      return lhs.rawArray as NSArray == rhs.rawArray as NSArray
+    #endif
   case (.dictionary, .dictionary):
-    return lhs.rawDictionary as NSDictionary == rhs.rawDictionary as NSDictionary
+    #if os(Linux)
+      return lhs.rawDictionary._bridgeToObjectiveC() == rhs.rawDictionary._bridgeToObjectiveC()
+    #else
+      return lhs.rawDictionary as NSDictionary == rhs.rawDictionary as NSDictionary
+    #endif
   case (.null, .null):
     return true
   default:
