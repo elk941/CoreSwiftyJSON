@@ -118,7 +118,7 @@ public struct JSON {
   public init(_ jsonDictionary:[String: JSON]) {
     var dictionary = [String: AnyObject](minimumCapacity: jsonDictionary.count)
     for (key, json) in jsonDictionary {
-      dictionary[key] = json.object
+      dictionary[key] = json.object as AnyObject?
     }
     self.init(dictionary)
   }
@@ -184,19 +184,19 @@ public struct JSON {
   fileprivate var _error: NSError? = nil
   
   /// Object in JSON
-  public var object: AnyObject {
+  public var object: Any {
     get {
       switch self.type {
       case .array:
-        return self.rawArray as AnyObject
+        return self.rawArray
       case .dictionary:
-        return self.rawDictionary as AnyObject
+        return self.rawDictionary
       case .string:
-        return self.rawString as AnyObject
+        return self.rawString
       case .number:
         return self.rawNumber
       case .bool:
-        return self.rawBool as AnyObject
+        return self.rawBool
       default:
         return self.rawNull
       }
@@ -426,7 +426,7 @@ extension JSON {
     set {
       if self.type == .array {
         if self.rawArray.count > index && newValue.error == nil {
-          self.rawArray[index] = newValue.object
+          self.rawArray[index] = newValue.object as AnyObject
         }
       }
     }
@@ -449,7 +449,7 @@ extension JSON {
     }
     set {
       if self.type == .dictionary && newValue.error == nil {
-        self.rawDictionary[key] = newValue.object
+        self.rawDictionary[key] = newValue.object as AnyObject?
       }
     }
   }
@@ -578,10 +578,10 @@ extension JSON: Swift.ExpressibleByDictionaryLiteral {
       return JSON(dictionaryLiteral: initializeElement)
     }
     
-    var dict = [String : AnyObject](minimumCapacity: elements.count)
+    var dict = [String : Any](minimumCapacity: elements.count)
     
     for element in elements {
-      let elementToSet: AnyObject
+      let elementToSet: Any
       if let json = element.1 as? JSON {
         elementToSet = json.object
       } else if let jsonArray = element.1 as? [JSON] {
@@ -629,7 +629,7 @@ extension JSON: Swift.RawRepresentable {
   }
   
   public var rawValue: AnyObject {
-    return self.object
+    return self.object as AnyObject
   }
   
   public func rawData(options opt: JSONSerialization.WritingOptions = JSONSerialization.WritingOptions(rawValue: 0)) throws -> Data {
